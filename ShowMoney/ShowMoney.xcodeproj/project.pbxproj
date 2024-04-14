@@ -15,6 +15,7 @@
 		B554316E2BCBCA130064B813 /* ShowMoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B554316D2BCBCA130064B813 /* ShowMoneyTests.swift */; };
 		B55431782BCBCA130064B813 /* ShowMoneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431772BCBCA130064B813 /* ShowMoneyUITests.swift */; };
 		B554317A2BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431792BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift */; };
+		B55431872BCBD28E0064B813 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431862BCBD28E0064B813 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		B55431732BCBCA130064B813 /* ShowMoneyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShowMoneyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B55431772BCBCA130064B813 /* ShowMoneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoneyUITests.swift; sourceTree = "<group>"; };
 		B55431792BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoneyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B55431862BCBD28E0064B813 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				B554315F2BCBCA130064B813 /* Assets.xcassets */,
 				B55431612BCBCA130064B813 /* LaunchScreen.storyboard */,
 				B55431642BCBCA130064B813 /* Info.plist */,
+				B55431862BCBD28E0064B813 /* CollectionViewCell.swift */,
 			);
 			path = ShowMoney;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				B554315B2BCBCA110064B813 /* ViewController.swift in Sources */,
 				B55431572BCBCA110064B813 /* AppDelegate.swift in Sources */,
+				B55431872BCBD28E0064B813 /* CollectionViewCell.swift in Sources */,
 				B55431592BCBCA110064B813 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
