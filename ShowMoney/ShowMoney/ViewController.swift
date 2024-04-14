@@ -14,7 +14,11 @@ class ViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.backgroundColor = .gray
-        cv.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        cv.register(CollectionViewCell.self,
+                    forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        cv.register(CollectionHeaderView.self,
+                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                    withReuseIdentifier: CollectionHeaderView.identifier)
         return cv
     }()
     override func viewDidLoad() {
@@ -47,6 +51,20 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 { return CGSize(width: collectionView.layer.frame.width, height: 200) }
+        return CGSizeZero
+    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                                                               withReuseIdentifier: CollectionHeaderView.identifier,
+                                                                               for: indexPath) as? CollectionHeaderView else { return UICollectionReusableView() }
+            return header
+        } else {
+            return UICollectionReusableView()
+        }
     }
 }
 extension ViewController: UICollectionViewDelegateFlowLayout {
