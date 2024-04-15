@@ -8,12 +8,12 @@
 import UIKit
 
 protocol CollectionSubHeaderViewDelegate: AnyObject {
-    func resizeSection()
+    func resizeSection(sectionIndex: Int)
 }
 
 class CollectionSubHeaderView: UICollectionReusableView {
     static let identifier = "CollectionSubHeaderView"
-    
+    var index = 0
     private let label: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .center
@@ -40,7 +40,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
     }
     @objc func headerViewTapped() {
         print("headerview tapped")
-        delegate?.resizeSection()
+        delegate?.resizeSection(sectionIndex: index)
     }
     override init(frame: CGRect) {
         super.init(frame: .zero)

@@ -11,11 +11,17 @@ class ViewController: UIViewController {
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     var data: [String] = ["hi", "nice"]
+    var emptyData: [String]?
+    var expanded = false
+    var sectionIndex = 0
+    var expandedArr: [Bool] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         addView()
         configureConstraints()
+        expandedArr = Array(repeating: false, count: 10)
     }
     private func addView() {
         makeCollectionView()
@@ -40,6 +46,7 @@ extension ViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = .white
+        let lout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
         
         registerCells()
         view.addSubview(collectionView)
@@ -109,11 +116,21 @@ extension ViewController {
 // MARK: - CollectionView Datasouce Delegate
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        if section == 0 {
+            return 2
+        }
+        if section == sectionIndex {
+            if expandedArr[section] {
+                return data.count
+            } else {
+                return 0
+            }
+        }
+        return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -140,6 +157,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: CollectionSubHeaderView.identifier,
                                                                                    for: indexPath) as? CollectionSubHeaderView else { return UICollectionReusableView() }
+                header.index = indexPath.section
                 header.delegate = self
                     return header
             }
@@ -159,9 +177,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 extension ViewController: CollectionSubHeaderViewDelegate {
-    func resizeSection() {
+    func resizeSection(sectionIndex: Int) {
+        self.sectionIndex = sectionIndex
+        expandedArr[sectionIndex] = !expandedArr[sectionIndex]
         print("tap")
         data.append("do")
         self.collectionView.reloadData()
     }
 }
+    
