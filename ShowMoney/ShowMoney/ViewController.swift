@@ -140,6 +140,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: CollectionSubHeaderView.identifier,
                                                                                    for: indexPath) as? CollectionSubHeaderView else { return UICollectionReusableView() }
+                header.delegate = self
                     return header
             }
             
@@ -150,9 +151,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
+    // 셀버튼 클릭
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+}
+
+extension ViewController: CollectionSubHeaderViewDelegate {
+    func resizeSection() {
+        print("tap")
         data.append("do")
         self.collectionView.reloadData()
     }
-    
 }
