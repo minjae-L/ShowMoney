@@ -7,8 +7,8 @@
 
 import UIKit
 
-class CollectionHeaderView: UICollectionReusableView {
-    static let identifier = "CollectionHeaderView"
+class CollectionMainHeaderView: UICollectionReusableView {
+    static let identifier = "CollectionMainHeaderView"
     private let mainMoneyLabel: UILabel = {
         let lb = UILabel()
         lb.translatesAutoresizingMaskIntoConstraints = false

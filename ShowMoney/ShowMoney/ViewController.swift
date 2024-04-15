@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
+    var data: [String] = ["hi", "nice"]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -47,7 +48,8 @@ extension ViewController {
     
     private func registerCells() {
         self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
-        self.collectionView.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.identifier)
+        self.collectionView.register(CollectionMainHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionMainHeaderView.identifier)
+        self.collectionView.register(CollectionSubHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionSubHeaderView.identifier)
     }
     
     private func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection {
@@ -94,14 +96,20 @@ extension ViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 15.0
         
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        section.boundarySupplementaryItems = [header]
+        
         return section
     }
 }
 
+
 // MARK: - CollectionView Datasouce Delegate
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return data.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -117,22 +125,34 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.backgroundColor = .green
         }
-        
+        cell.label.text = data[indexPath.row]
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                               withReuseIdentifier: CollectionHeaderView.identifier,
-                                                                               for: indexPath) as? CollectionHeaderView else { return UICollectionReusableView() }
-                return header
+            if indexPath.section == 0 {
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                   withReuseIdentifier: CollectionMainHeaderView.identifier,
+                                                                                   for: indexPath) as? CollectionMainHeaderView else { return UICollectionReusableView() }
+                    return header
+            } else {
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                   withReuseIdentifier: CollectionSubHeaderView.identifier,
+                                                                                   for: indexPath) as? CollectionSubHeaderView else { return UICollectionReusableView() }
+                    return header
+            }
+            
         case UICollectionView.elementKindSectionFooter:
             return UICollectionReusableView()
         default:
             print("Header and Footer Error")
             return UICollectionReusableView()
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        data.append("do")
+        self.collectionView.reloadData()
     }
     
 }
