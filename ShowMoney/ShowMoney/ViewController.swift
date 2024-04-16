@@ -10,7 +10,17 @@ import UIKit
 class ViewController: UIViewController {
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    var data: [String] = ["hi", "nice"]
+    var total = [[],
+                ["hi", "nice", "to", "meet", "you"],
+                ["what", "sup", "guys"],
+                ["how", "are", "you"]
+                ]
+    var addTotal = [[],
+                ["hi", "nice", "to", "meet", "you"],
+                ["what", "sup", "guys"],
+                ["how", "are", "you"]
+                ]
+    
     var emptyData: [String]?
     var expanded = false
     var sectionIndex = 0
@@ -21,7 +31,7 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .white
         addView()
         configureConstraints()
-        expandedArr = Array(repeating: false, count: 10)
+        expandedArr = Array(repeating: true, count: 10)
     }
     private func addView() {
         makeCollectionView()
@@ -117,20 +127,14 @@ extension ViewController {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return 0
+        } else {
+            return total[section].count
         }
-        if section == sectionIndex {
-            if expandedArr[section] {
-                return data.count
-            } else {
-                return 0
-            }
-        }
-        return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return total.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -142,7 +146,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.backgroundColor = .green
         }
-        cell.label.text = data[indexPath.row]
+        cell.label.text = total[indexPath.section][indexPath.row]
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -179,10 +183,34 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 extension ViewController: CollectionSubHeaderViewDelegate {
     func resizeSection(sectionIndex: Int) {
         self.sectionIndex = sectionIndex
-        expandedArr[sectionIndex] = !expandedArr[sectionIndex]
         print("tap")
-        data.append("do")
-        self.collectionView.reloadData()
+        
+        // 수축되어있을때,
+        if expandedArr[sectionIndex] {
+            print("expanded: \(expandedArr[sectionIndex])")
+            expandedArr[sectionIndex] = !expandedArr[sectionIndex]
+            self.collectionView.performBatchUpdates({
+                for i in (0..<total[sectionIndex].count).reversed() {
+                    self.total[sectionIndex].remove(at: i)
+                    self.collectionView.deleteItems(at: [IndexPath(item: i, section: sectionIndex)])
+                }
+                
+            }, completion: nil)
+            print(total)
+        } else {
+            // 팽창되어있을때
+            print("expanded: \(expandedArr[sectionIndex])")
+            expandedArr[sectionIndex] = !expandedArr[sectionIndex]
+            self.collectionView.performBatchUpdates({
+                for i in 0..<self.addTotal[sectionIndex].count {
+                    self.total[sectionIndex].append(addTotal[sectionIndex][i])
+                    print(addTotal[sectionIndex][i])
+                    self.collectionView.insertItems(at: [IndexPath(item: i, section: sectionIndex)])
+                }
+            }, completion: nil)
+            print(total)
+        }
+        
     }
 }
     
