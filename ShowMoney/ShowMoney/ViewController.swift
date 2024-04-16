@@ -20,9 +20,6 @@ class ViewController: UIViewController {
                 ["what", "sup", "guys"],
                 ["how", "are", "you"]
                 ]
-    
-    var emptyData: [String]?
-    var expanded = false
     var sectionIndex = 0
     var expandedArr: [Bool] = []
     
@@ -106,7 +103,7 @@ extension ViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.15))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = NSCollectionLayoutSpacing.flexible(10.0)
         
@@ -180,6 +177,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
 }
 
+// MARK: - HeaderView Action
+
 extension ViewController: CollectionSubHeaderViewDelegate {
     func resizeSection(sectionIndex: Int) {
         self.sectionIndex = sectionIndex
@@ -190,6 +189,7 @@ extension ViewController: CollectionSubHeaderViewDelegate {
             print("expanded: \(expandedArr[sectionIndex])")
             expandedArr[sectionIndex] = !expandedArr[sectionIndex]
             self.collectionView.performBatchUpdates({
+                self.collectionView.layoutIfNeeded()
                 for i in (0..<total[sectionIndex].count).reversed() {
                     self.total[sectionIndex].remove(at: i)
                     self.collectionView.deleteItems(at: [IndexPath(item: i, section: sectionIndex)])
@@ -202,6 +202,7 @@ extension ViewController: CollectionSubHeaderViewDelegate {
             print("expanded: \(expandedArr[sectionIndex])")
             expandedArr[sectionIndex] = !expandedArr[sectionIndex]
             self.collectionView.performBatchUpdates({
+                self.collectionView.layoutIfNeeded()
                 for i in 0..<self.addTotal[sectionIndex].count {
                     self.total[sectionIndex].append(addTotal[sectionIndex][i])
                     print(addTotal[sectionIndex][i])

@@ -17,7 +17,6 @@ class CollectionViewCell: UICollectionViewCell {
         lb.font = .boldSystemFont(ofSize: 20)
         return lb
     }()
-    var expanded = false
     private func addView() {
         contentView.addSubview(label)
     }
