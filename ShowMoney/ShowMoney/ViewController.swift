@@ -61,7 +61,7 @@ extension ViewController {
     }
     
     private func registerCells() {
-        self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
+        self.collectionView.register(CollectionSubViewCell.self, forCellWithReuseIdentifier: CollectionSubViewCell.identifier)
         self.collectionView.register(CollectionMainHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionMainHeaderView.identifier)
         self.collectionView.register(CollectionSubHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionSubHeaderView.identifier)
     }
@@ -85,7 +85,7 @@ extension ViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = NSCollectionLayoutSpacing.flexible(10.0)
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 15.0
+        section.interGroupSpacing = 10.0
         section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         section.orthogonalScrollingBehavior = .paging
         
@@ -98,17 +98,16 @@ extension ViewController {
     }
     
     private func createSubSection(weightConstant: Int) -> NSCollectionLayoutSection {
-        let weight = (Double(weightConstant) * 0.05)
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.15))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.05))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = NSCollectionLayoutSpacing.flexible(10.0)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 15.0
+        section.interGroupSpacing = 5.0
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -135,7 +134,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionSubViewCell.identifier, for: indexPath) as? CollectionSubViewCell else {
             return UICollectionViewCell()
         }
         if indexPath.section == 0 {
@@ -143,7 +142,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             cell.backgroundColor = .green
         }
-        cell.label.text = total[indexPath.section][indexPath.row]
+        cell.nameLabel.text = total[indexPath.section][indexPath.row]
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
