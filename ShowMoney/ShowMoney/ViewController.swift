@@ -20,15 +20,47 @@ class ViewController: UIViewController {
                 ["what", "sup", "guys"],
                 ["how", "are", "you"]
                 ]
+    var data: [PayModel] = [
+        PayModel(name: "짜장", money: 20000),
+        PayModel(name: "짬뽕", money: 25000)
+    ]
+    var sections: [CellModel] = []
+
     var sectionIndex = 0
     var expandedArr: [Bool] = []
-    
+    func addData() {
+        sections.append(CellModel(cellType: [
+            .mainCellType(model: MainSectionModel(name: "1000000000",
+                                                  categorys: [MainCategory(name: "hi"),
+                                                              MainCategory(name: "nice")
+                                                                                                                  ]))]))
+        sections.append(CellModel(cellType: [.subCellType(model: SubSectionModel(categoryName: "식비",
+                                                                                 totalMoney: 2000000,
+                                                                                 percent: 40,
+                                                                                 payModel: [PayModel(name: "짜장",
+                                                                                                     money: 20000),
+                                                                                 PayModel(name: "짬뽕", money: 15000)]
+                                                                                 ))]))
+        sections.append(CellModel(cellType: [.subCellType(model: SubSectionModel(categoryName: "식비",
+                                                                                 totalMoney: 2000000,
+                                                                                 percent: 40,
+                                                                                 payModel: [
+                                                                                    PayModel(name: "탕수육",
+                                                                                            money: 20000),
+                                                                                    PayModel(name: "볶음밥",
+                                                                                             money: 15000),
+                                                                                    PayModel(name: "단무지",
+                                                                                             money: 2000)]
+                                                                                 ))]))
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         addView()
         configureConstraints()
         expandedArr = Array(repeating: true, count: 10)
+        addData()
     }
     private func addView() {
         makeCollectionView()
@@ -61,6 +93,7 @@ extension ViewController {
     }
     
     private func registerCells() {
+        self.collectionView.register(CollectionMainViewCell.self, forCellWithReuseIdentifier: CollectionMainViewCell.identifier)
         self.collectionView.register(CollectionSubViewCell.self, forCellWithReuseIdentifier: CollectionSubViewCell.identifier)
         self.collectionView.register(CollectionMainHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionMainHeaderView.identifier)
         self.collectionView.register(CollectionSubHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionSubHeaderView.identifier)
@@ -122,28 +155,58 @@ extension ViewController {
 // MARK: - CollectionView Datasouce Delegate
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var model: CellType?
+
         if section == 0 {
-            return 0
+            model = sections[section].cellType[0]
         } else {
-            return total[section].count
+            model = sections[section].cellType[0]
         }
+//
+        switch model {
+        case .mainCellType(let model):
+            if section == 0 {
+                return model.categorys.count
+            }
+        case .subCellType(let model):
+            if section != 0 {
+                return model.payModel.count
+            }
+        default:
+            return 0
+        }
+        return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return total.count
+        return sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionSubViewCell.identifier, for: indexPath) as? CollectionSubViewCell else {
+        
+        var md = sections[indexPath.section].cellType[0]
+        
+        switch md {
+        case .mainCellType(let model):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CollectionMainViewCell.identifier,
+                for: indexPath) as? CollectionMainViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(model: model.categorys[indexPath.row])
+            return cell
+        case .subCellType(let model):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CollectionSubViewCell.identifier,
+                for: indexPath) as? CollectionSubViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(model:model.payModel[indexPath.row])
+            return cell
+        default:
             return UICollectionViewCell()
         }
-        if indexPath.section == 0 {
-            cell.backgroundColor = .red
-        } else {
-            cell.backgroundColor = .green
-        }
-        cell.nameLabel.text = total[indexPath.section][indexPath.row]
-        return cell
+
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {

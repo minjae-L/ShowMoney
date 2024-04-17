@@ -9,6 +9,8 @@ import UIKit
 
 class CollectionSubViewCell: UICollectionViewCell {
     static let identifier = "CollectionSubViewCell"
+   
+    
     var nameLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
@@ -22,8 +24,8 @@ class CollectionSubViewCell: UICollectionViewCell {
         lb.textAlignment = .left
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.numberOfLines = 0
-        lb.font = .systemFont(ofSize: 20)
-        lb.text = "2,000,000,000"
+        lb.font = .systemFont(ofSize: 16)
+//        lb.text = "2,000,000,000"
         return lb
     }()
     private func addView() {
@@ -48,10 +50,13 @@ class CollectionSubViewCell: UICollectionViewCell {
         super.init(frame: frame)
         addView()
         configureConstraints()
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func configure(model: PayModel) {
+        self.nameLabel.text = model.name
+        self.moneyLabel.text = String(model.money)
     }
 }

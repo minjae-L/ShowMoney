@@ -24,29 +24,29 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.font = .systemFont(ofSize: 15)
         lb.numberOfLines = 0
         lb.textColor = .black
-        lb.text = "식비"
+//        lb.text = "식비"
         
         return lb
     }()
     
-    private let totalMoneylabel: UILabel = {
+    private var totalMoneylabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .boldSystemFont(ofSize: 25)
         lb.numberOfLines = 0
-        lb.text = "200,000,000,000"
+//        lb.text = "200,000,000,000"
         
         return lb
     }()
     
-    private let percentLabel: UILabel = {
+    private var percentLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .boldSystemFont(ofSize: 15)
         lb.numberOfLines = 0
-        lb.text = "40%"
+//        lb.text = "40%"
         return lb
     }()
 //    MARK: Button Property
@@ -132,5 +132,9 @@ class CollectionSubHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    func configure(model: SubSectionModel) {
+        self.categoryLabel.text = model.categoryName
+        self.totalMoneylabel.text = String(model.totalMoney)
+        self.percentLabel.text = String(model.percent)
+    }
 }
