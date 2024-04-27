@@ -8,12 +8,13 @@
 import Foundation
 
 struct CellModel {
-    let cellType: [CellType]
+    var cellType: CellType
 }
 
 enum CellType {
     case mainCellType(model: MainSectionModel)
     case subCellType(model: SubSectionModel)
+    
 }
 
 struct MainSectionModel {

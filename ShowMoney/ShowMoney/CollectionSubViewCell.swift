@@ -25,7 +25,6 @@ class CollectionSubViewCell: UICollectionViewCell {
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.numberOfLines = 0
         lb.font = .systemFont(ofSize: 16)
-//        lb.text = "2,000,000,000"
         return lb
     }()
     private func addView() {

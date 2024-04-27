@@ -24,7 +24,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.font = .systemFont(ofSize: 15)
         lb.numberOfLines = 0
         lb.textColor = .black
-//        lb.text = "식비"
         
         return lb
     }()
@@ -46,7 +45,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .boldSystemFont(ofSize: 15)
         lb.numberOfLines = 0
-//        lb.text = "40%"
         return lb
     }()
 //    MARK: Button Property
@@ -85,7 +83,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
     
 //    MARK: Add View & Layout
     private func addView() {
-//        addSubview(label)
         addSubview(stackView)
         addSubview(addButton)
         stackView.addArrangedSubview(categoryLabel)
