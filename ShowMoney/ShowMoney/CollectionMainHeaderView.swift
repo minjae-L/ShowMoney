@@ -16,14 +16,27 @@ class CollectionMainHeaderView: UICollectionReusableView {
         lb.textAlignment = .center
         return lb
     }()
+    private var timestampLabel: UILabel = {
+        let lb = UILabel()
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.font = .systemFont(ofSize: 15)
+        lb.textAlignment = .center
+        lb.text = "2024.04.27 ~ 2024.04.30"
+        return lb
+    }()
     
     private func addView() {
         addSubview(mainMoneyLabel)
+        addSubview(timestampLabel)
     }
     
     private func configureConstraints() {
-        mainMoneyLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        mainMoneyLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            mainMoneyLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            mainMoneyLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            timestampLabel.topAnchor.constraint(equalTo: mainMoneyLabel.bottomAnchor, constant: 10),
+            timestampLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
     }
     override init(frame: CGRect) {
         super.init(frame: .zero)
