@@ -204,6 +204,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
 //        MARK: CollectionView Header & Footer
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let model = sections[indexPath.section].cellType
+        var mainHeadViewData: MainSectionModel?
+        var subHeadViewData: SubSectionModel?
+        switch model {
+        case .mainCellType(let model):
+            mainHeadViewData = model
+        case .subCellType(let model):
+            subHeadViewData = model
+        }
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if indexPath.section == 0 {
@@ -215,7 +224,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: CollectionSubHeaderView.identifier,
                                                                                    for: indexPath) as? CollectionSubHeaderView else { return UICollectionReusableView() }
+                guard let model = subHeadViewData else { return UICollectionReusableView() }
                 header.index = indexPath.section
+                header.configure(model: model)
                 header.delegate = self
                     return header
             }
