@@ -10,38 +10,28 @@ import UIKit
 class ViewController: UIViewController {
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    var total = [[],
-                ["hi", "nice", "to", "meet", "you"],
-                ["what", "sup", "guys"],
-                ["how", "are", "you"]
-                ]
-    var addTotal = [[],
-                ["hi", "nice", "to", "meet", "you"],
-                ["what", "sup", "guys"],
-                ["how", "are", "you"]
-                ]
     var data: [PayModel] = [
         PayModel(name: "짜장", money: 20000),
         PayModel(name: "짬뽕", money: 25000)
     ]
     var sections: [CellModel] = []
-
+    var copySections: [CellModel] = []
     var sectionIndex = 0
     var expandedArr: [Bool] = []
     func addData() {
-        sections.append(CellModel(cellType: [
+        sections.append(CellModel(cellType:
             .mainCellType(model: MainSectionModel(name: "1000000000",
                                                   categorys: [MainCategory(name: "hi"),
                                                               MainCategory(name: "nice")
-                                                                                                                  ]))]))
-        sections.append(CellModel(cellType: [.subCellType(model: SubSectionModel(categoryName: "식비",
+                                                                                                                  ]))))
+        sections.append(CellModel(cellType: .subCellType(model: SubSectionModel(categoryName: "식비",
                                                                                  totalMoney: 2000000,
                                                                                  percent: 40,
                                                                                  payModel: [PayModel(name: "짜장",
                                                                                                      money: 20000),
                                                                                  PayModel(name: "짬뽕", money: 15000)]
-                                                                                 ))]))
-        sections.append(CellModel(cellType: [.subCellType(model: SubSectionModel(categoryName: "식비",
+                                                                                 ))))
+        sections.append(CellModel(cellType: .subCellType(model: SubSectionModel(categoryName: "식비2",
                                                                                  totalMoney: 2000000,
                                                                                  percent: 40,
                                                                                  payModel: [
@@ -51,7 +41,7 @@ class ViewController: UIViewController {
                                                                                              money: 15000),
                                                                                     PayModel(name: "단무지",
                                                                                              money: 2000)]
-                                                                                 ))]))
+                                                                                 ))))
         
     }
     override func viewDidLoad() {
@@ -59,8 +49,14 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .white
         addView()
         configureConstraints()
-        expandedArr = Array(repeating: true, count: 10)
         addData()
+        expandedArr = Array(repeating: false, count: sections.count)
+        copySections = sections
+        
+//        for i in 0..<expandedArr.count {
+//            if i == 0 { continue }
+//            resizeSection(sectionIndex: i)
+//        }
     }
     private func addView() {
         makeCollectionView()
@@ -75,7 +71,7 @@ class ViewController: UIViewController {
     }
 }
 
-// MARK: - CollectionView CompotionalLayout
+// MARK: - CompotionalLayout
 extension ViewController {
     private func makeCollectionView() {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex,_) -> NSCollectionLayoutSection? in
@@ -156,35 +152,31 @@ extension ViewController {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var model: CellType?
-
-        if section == 0 {
-            model = sections[section].cellType[0]
-        } else {
-            model = sections[section].cellType[0]
-        }
-//
+        model = sections[section].cellType
+        var count = 0
         switch model {
         case .mainCellType(let model):
             if section == 0 {
-                return model.categorys.count
+                count = model.categorys.count
             }
         case .subCellType(let model):
             if section != 0 {
-                return model.payModel.count
+                count = model.payModel.count
             }
         default:
-            return 0
+            break
         }
-        return 0
+        return count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
     
+    // MARK: CellForItem
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var md = sections[indexPath.section].cellType[0]
+        var md = sections[indexPath.section].cellType
         
         switch md {
         case .mainCellType(let model):
@@ -193,6 +185,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? CollectionMainViewCell else {
                 return UICollectionViewCell()
             }
+            print("main: \([IndexPath(item: indexPath.row, section: indexPath.section)])")
             cell.configure(model: model.categorys[indexPath.row])
             return cell
         case .subCellType(let model):
@@ -201,6 +194,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? CollectionSubViewCell else {
                 return UICollectionViewCell()
             }
+            print("sub\(model.categoryName): \([IndexPath(item: indexPath.row, section: indexPath.section)])")
             cell.configure(model:model.payModel[indexPath.row])
             return cell
         default:
@@ -208,6 +202,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         }
 
     }
+//        MARK: CollectionView Header & Footer
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
@@ -232,48 +227,42 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             return UICollectionReusableView()
         }
     }
-    // 셀버튼 클릭
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
 }
 
-// MARK: - HeaderView Action
+// MARK: - HeaderViewDelegate, Expand Cell
 
 extension ViewController: CollectionSubHeaderViewDelegate {
     func resizeSection(sectionIndex: Int) {
         self.sectionIndex = sectionIndex
-        print("tap")
-        
-        // 수축되어있을때,
-        if expandedArr[sectionIndex] {
-            print("expanded: \(expandedArr[sectionIndex])")
-            expandedArr[sectionIndex] = !expandedArr[sectionIndex]
+
+        var model = copySections[sectionIndex].cellType
+        var arr: SubSectionModel?
+        switch model {
+        case .mainCellType(model: var model): break
+        case .subCellType(model: var model):
+            arr = model
+        }
+        if !expandedArr[sectionIndex] {
             self.collectionView.performBatchUpdates({
                 self.collectionView.layoutIfNeeded()
-                for i in (0..<total[sectionIndex].count).reversed() {
-                    self.total[sectionIndex].remove(at: i)
+                for i in (0..<(arr?.payModel.count)!).reversed() {
+                    arr?.payModel.removeLast()
+                    sections[sectionIndex].cellType = .subCellType(model: arr!)
                     self.collectionView.deleteItems(at: [IndexPath(item: i, section: sectionIndex)])
                 }
-                
-            }, completion: nil)
-            print(total)
+            })
         } else {
-            // 팽창되어있을때
-            print("expanded: \(expandedArr[sectionIndex])")
-            expandedArr[sectionIndex] = !expandedArr[sectionIndex]
+            var addArr: [PayModel] = []
             self.collectionView.performBatchUpdates({
                 self.collectionView.layoutIfNeeded()
-                for i in 0..<self.addTotal[sectionIndex].count {
-                    self.total[sectionIndex].append(addTotal[sectionIndex][i])
-                    print(addTotal[sectionIndex][i])
+                for i in (0..<(arr?.payModel.count)!) {
+                    addArr.append(arr!.payModel[i])
+                    sections[sectionIndex].cellType = .subCellType(model: SubSectionModel(categoryName: arr!.categoryName, totalMoney: arr!.totalMoney, percent: arr!.percent, payModel: addArr))
                     self.collectionView.insertItems(at: [IndexPath(item: i, section: sectionIndex)])
                 }
-            }, completion: nil)
-            print(total)
+            })
         }
-        
+        expandedArr[sectionIndex] = !expandedArr[sectionIndex]
     }
 }
     
