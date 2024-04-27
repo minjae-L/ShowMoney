@@ -10,17 +10,13 @@ import UIKit
 class ViewController: UIViewController {
     private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
-    var data: [PayModel] = [
-        PayModel(name: "짜장", money: 20000),
-        PayModel(name: "짬뽕", money: 25000)
-    ]
-    var sections: [CellModel] = []
-    var copySections: [CellModel] = []
-    var sectionIndex = 0
-    var expandedArr: [Bool] = []
-    func addData() {
+    private var sections: [CellModel] = []
+    private var copySections: [CellModel] = []
+    private var sectionIndex = 0
+    private var expandedArr: [Bool] = []
+    private func addData() {
         sections.append(CellModel(cellType:
-            .mainCellType(model: MainSectionModel(name: "1000000000",
+            .mainCellType(model: MainSectionModel(moneyGoal: "1000000000",
                                                   categorys: [MainCategory(name: "hi"),
                                                               MainCategory(name: "nice")
                                                                                                                   ]))))
@@ -52,15 +48,17 @@ class ViewController: UIViewController {
         addData()
         expandedArr = Array(repeating: false, count: sections.count)
         copySections = sections
-        
-//        for i in 0..<expandedArr.count {
-//            if i == 0 { continue }
-//            resizeSection(sectionIndex: i)
-//        }
+        isExpandedCell()
     }
     private func addView() {
         makeCollectionView()
         
+    }
+    private func isExpandedCell() {
+        for i in 0..<expandedArr.count {
+            if i == 0 { continue }
+            resizeSection(sectionIndex: i)
+        }
     }
     private func configureConstraints() {
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -175,9 +173,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MARK: CellForItem
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        var md = sections[indexPath.section].cellType
-        
+        let md = sections[indexPath.section].cellType
         switch md {
         case .mainCellType(let model):
             guard let cell = collectionView.dequeueReusableCell(
@@ -185,7 +181,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? CollectionMainViewCell else {
                 return UICollectionViewCell()
             }
-            print("main: \([IndexPath(item: indexPath.row, section: indexPath.section)])")
             cell.configure(model: model.categorys[indexPath.row])
             return cell
         case .subCellType(let model):
@@ -194,7 +189,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 for: indexPath) as? CollectionSubViewCell else {
                 return UICollectionViewCell()
             }
-            print("sub\(model.categoryName): \([IndexPath(item: indexPath.row, section: indexPath.section)])")
             cell.configure(model:model.payModel[indexPath.row])
             return cell
         default:
@@ -219,6 +213,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                    withReuseIdentifier: CollectionMainHeaderView.identifier,
                                                                                    for: indexPath) as? CollectionMainHeaderView else { return UICollectionReusableView() }
+                guard let model = mainHeadViewData else { return UICollectionReusableView() }
+                header.configure(model: model)
                     return header
             } else {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
@@ -249,7 +245,7 @@ extension ViewController: CollectionSubHeaderViewDelegate {
         var model = copySections[sectionIndex].cellType
         var arr: SubSectionModel?
         switch model {
-        case .mainCellType(model: var model): break
+        case .mainCellType(model: _): break
         case .subCellType(model: var model):
             arr = model
         }

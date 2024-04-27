@@ -18,7 +18,7 @@ enum CellType {
 }
 
 struct MainSectionModel {
-    let name: String
+    let moneyGoal: String
     let categorys: [MainCategory]
 }
 struct MainCategory {

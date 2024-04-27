@@ -9,12 +9,11 @@ import UIKit
 
 class CollectionMainHeaderView: UICollectionReusableView {
     static let identifier = "CollectionMainHeaderView"
-    private let mainMoneyLabel: UILabel = {
+    private var mainMoneyLabel: UILabel = {
         let lb = UILabel()
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .boldSystemFont(ofSize: 20)
         lb.textAlignment = .center
-        lb.text = "10,000,000"
         return lb
     }()
     
@@ -35,5 +34,8 @@ class CollectionMainHeaderView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func configure(model: MainSectionModel) {
+        self.mainMoneyLabel.text = model.moneyGoal
     }
 }
