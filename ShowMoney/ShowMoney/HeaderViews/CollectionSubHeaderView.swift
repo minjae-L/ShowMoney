@@ -23,7 +23,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .systemFont(ofSize: 15)
         lb.numberOfLines = 0
-        lb.textColor = .black
         
         return lb
     }()
@@ -34,7 +33,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.font = .boldSystemFont(ofSize: 25)
         lb.numberOfLines = 0
-//        lb.text = "200,000,000,000"
         
         return lb
     }()
@@ -50,12 +48,12 @@ class CollectionSubHeaderView: UICollectionReusableView {
 //    MARK: Button Property
     private let addButton: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(systemName: "plus"), for: .normal)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        btn.setImage(UIImage(systemName: "plus", withConfiguration: imageConfig), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.contentMode = .scaleAspectFill
         btn.layer.cornerRadius = 15
         btn.clipsToBounds = true
-        btn.backgroundColor = .gray
         return btn
     }()
     
@@ -65,7 +63,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         sv.axis = .vertical
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.spacing = 5
-        sv.backgroundColor = .cyan
         sv.alignment = .leading
         sv.distribution = .fillEqually
         return sv
@@ -75,7 +72,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         sv.axis = .horizontal
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.spacing = 15
-        sv.backgroundColor = .cyan
         sv.alignment = .trailing
         sv.distribution = .equalSpacing
         return sv
@@ -110,6 +106,14 @@ class CollectionSubHeaderView: UICollectionReusableView {
         self.layer.cornerRadius = 5
         self.layer.masksToBounds = true
     }
+    private func configureColor() {
+        categoryLabel.textColor = UIColor(named: "LabelTextColor")
+        totalMoneylabel.textColor = UIColor(named: "LabelTextColor")
+        percentLabel.textColor = UIColor(named: "LabelTextColor")
+        stackView.backgroundColor = UIColor(named: "CellBackgroundColor")
+        innerStackView.backgroundColor = UIColor(named: "CellBackgroundColor")
+        self.backgroundColor = UIColor(named: "CellBackgroundColor")
+    }
     private func addEvent() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerViewTapped))
         addGestureRecognizer(tapGesture)
@@ -123,7 +127,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
         addView()
         configureConstraints()
         addEvent()
-        self.backgroundColor = .brown
+        configureColor()
     }
     
     required init?(coder: NSCoder) {

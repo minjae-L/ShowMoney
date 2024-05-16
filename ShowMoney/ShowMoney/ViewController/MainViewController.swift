@@ -14,7 +14,6 @@ class MainViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 0
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .gray
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(MainCollectionViewCell.self, forCellWithReuseIdentifier: MainCollectionViewCell.identifier)
         cv.register(CollectionMainHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionMainHeaderView.identifier)
@@ -23,9 +22,10 @@ class MainViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         addView()
         configureLayout()
+        configureColor()
         self.mainCollectionView.delegate = self
         self.mainCollectionView.dataSource = self
     }
@@ -41,7 +41,8 @@ class MainViewController: UIViewController {
         ])
     }
     private func configureColor() {
-        
+        view.backgroundColor = UIColor(named: "ViewBackgroundColor")
+        mainCollectionView.backgroundColor = UIColor(named: "ViewBackgroundColor")
     }
 }
 
@@ -55,7 +56,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             print("Fail")
             return UICollectionViewCell()
         }
-        
         cell.delegate = self
         cell.configure(indexPath.row)
         return cell
@@ -67,6 +67,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionMainHeaderView.identifier, for: indexPath) as? CollectionMainHeaderView else { return UICollectionReusableView() }
+            header.clipsToBounds = true
+            header.layer.cornerRadius = 10
             switch Sample.data[0] {
             case .category(let model):
                 header.configure(model: model)
@@ -94,7 +96,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
                 return CGSize(width: self.view.frame.width, height: 50)
             case .moneyTable(let model):
                 if model.expanded {
-                    return CGSize(width: self.view.frame.width, height: CGFloat((model.payModel.count+1) * 100 + ((model.payModel.count - 1) * 10 )))
+                    return CGSize(width: self.view.frame.width, height: CGFloat((model.payModel.count) * 50 + ((model.payModel.count - 1) * 10 )) + 100)
                 } else {
                     return CGSize(width: self.view.frame.width, height: 100)
                 }
@@ -103,7 +105,7 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.width, height: 150)
+        return CGSize(width: self.view.frame.width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0

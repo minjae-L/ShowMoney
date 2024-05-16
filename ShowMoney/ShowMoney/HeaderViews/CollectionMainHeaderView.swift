@@ -33,16 +33,21 @@ class CollectionMainHeaderView: UICollectionReusableView {
     private func configureConstraints() {
         NSLayoutConstraint.activate([
             mainMoneyLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            mainMoneyLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            mainMoneyLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             timestampLabel.topAnchor.constraint(equalTo: mainMoneyLabel.bottomAnchor, constant: 10),
             timestampLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
+    private func configureColor() {
+        self.backgroundColor = .clear
+        mainMoneyLabel.textColor = UIColor(named: "LabelTextColor")
+        timestampLabel.textColor = .lightGray
+    }
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = .systemPink
         addView()
         configureConstraints()
+        configureColor()
     }
     
     required init?(coder: NSCoder) {

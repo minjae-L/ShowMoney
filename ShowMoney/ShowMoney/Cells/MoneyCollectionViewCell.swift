@@ -42,10 +42,16 @@ class MoneyCollectionViewCell: UICollectionViewCell {
             moneyLabel.leadingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor,constant: -100)
             ])
     }
+    private func configureColor() {
+        self.backgroundColor = UIColor(named: "CellInCellColor")
+        nameLabel.textColor = UIColor(named: "LabelTextColor")
+        moneyLabel.textColor = UIColor(named: "LabelTextColor")
+    }
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addView()
         configureConstraints()
+        configureColor()
     }
     
     required init?(coder: NSCoder) {

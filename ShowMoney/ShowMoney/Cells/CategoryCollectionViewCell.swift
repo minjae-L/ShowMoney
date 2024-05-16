@@ -16,19 +16,24 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         return lb
     }()
     
-    func addView() {
+    private func addView() {
         self.contentView.addSubview(label)
     }
-    func configureConstraints() {
+    private func configureConstraints() {
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
     }
+    private func configureColor() {
+        self.backgroundColor = UIColor(named: "CellBackgroundColor")
+        
+    }
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addView()
         configureConstraints()
+        configureColor()
     }
     
     required init?(coder: NSCoder) {

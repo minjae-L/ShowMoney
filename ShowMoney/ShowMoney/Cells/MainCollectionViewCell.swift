@@ -88,12 +88,11 @@ extension MainCollectionViewCell: UICollectionViewDelegate, UICollectionViewData
         switch Sample.data[idx] {
         case .category(let model):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.identifier, for: indexPath) as? CategoryCollectionViewCell else { return UICollectionViewCell() }
-            cell.backgroundColor = .gray
             cell.configure(model: model.categorys[indexPath.row])
+            collectionView.backgroundColor = .clear
             return cell
         case .moneyTable(let model):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoneyCollectionViewCell.identifier, for: indexPath) as? MoneyCollectionViewCell else { return UICollectionViewCell() }
-            cell.backgroundColor = .systemPink
             cell.configure(model: model.payModel[indexPath.row])
             return cell
         }
@@ -126,7 +125,7 @@ extension MainCollectionViewCell: UICollectionViewDelegateFlowLayout {
         case .category:
             return CGSize(width: 50, height: self.contentView.frame.height)
         case .moneyTable:
-            return CGSize(width: self.contentView.frame.width, height: 100)
+            return CGSize(width: self.contentView.frame.width, height: 50)
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
