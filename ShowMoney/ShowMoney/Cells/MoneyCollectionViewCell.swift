@@ -1,17 +1,16 @@
 //
-//  CollectionViewCell.swift
+//  MoneyCollectionViewCell.swift
 //  ShowMoney
 //
-//  Created by 이민재 on 4/14/24.
+//  Created by 이민재 on 5/14/24.
 //
 
 import UIKit
 
-class CollectionSubViewCell: UICollectionViewCell {
-    static let identifier = "CollectionSubViewCell"
-   
+class MoneyCollectionViewCell: UICollectionViewCell {
+    static let identifier = "MoneyCollectionViewCell"
     
-    var nameLabel: UILabel = {
+    private var nameLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
         lb.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +30,6 @@ class CollectionSubViewCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(moneyLabel)
     }
-    
     private func configureConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: 10),
@@ -44,9 +42,8 @@ class CollectionSubViewCell: UICollectionViewCell {
             moneyLabel.leadingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor,constant: -100)
             ])
     }
-    
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         addView()
         configureConstraints()
     }
@@ -58,4 +55,5 @@ class CollectionSubViewCell: UICollectionViewCell {
         self.nameLabel.text = model.name
         self.moneyLabel.text = String(model.money)
     }
+    
 }

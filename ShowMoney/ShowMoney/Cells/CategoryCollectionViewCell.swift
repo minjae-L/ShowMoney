@@ -1,14 +1,14 @@
 //
-//  CollectionMainViewCell.swift
+//  CategoryCollectionViewCell.swift
 //  ShowMoney
 //
-//  Created by 이민재 on 4/16/24.
+//  Created by 이민재 on 5/14/24.
 //
 
 import UIKit
 
-class CollectionMainViewCell: UICollectionViewCell {
-    static let identifier = "CollectionMainViewCell"
+class CategoryCollectionViewCell: UICollectionViewCell {
+    static let identifier = "CategoryCollectionViewCell"
     private var label: UILabel = {
         let lb = UILabel()
         lb.translatesAutoresizingMaskIntoConstraints = false
