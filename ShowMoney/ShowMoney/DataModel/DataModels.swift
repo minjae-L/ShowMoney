@@ -7,14 +7,9 @@
 
 import Foundation
 
-struct CellModel {
-    var cellType: CellType
-}
-
-enum CellType {
-    case mainCellType(model: MainSectionModel)
-    case subCellType(model: SubSectionModel)
-    
+enum CollectionViewType {
+    case category(model: MainSectionModel)
+    case moneyTable(model: SubSectionModel)
 }
 
 struct MainSectionModel {
@@ -37,6 +32,7 @@ struct PayModel {
     let name: String
     let money: Int
 }
+// 임시 데이터
 class Sample {
     static var data: [CollectionViewType] = [.category(model: MainSectionModel(moneyGoal: "1000000",
                                                                                categorys: [MainCategory(name: "bye")])),

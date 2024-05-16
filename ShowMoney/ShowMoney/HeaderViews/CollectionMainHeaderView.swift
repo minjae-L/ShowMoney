@@ -9,6 +9,7 @@ import UIKit
 
 class CollectionMainHeaderView: UICollectionReusableView {
     static let identifier = "CollectionMainHeaderView"
+    // MARK: UI Property
     private var mainMoneyLabel: UILabel = {
         let lb = UILabel()
         lb.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +26,7 @@ class CollectionMainHeaderView: UICollectionReusableView {
         return lb
     }()
     
+    // MARK: Method
     private func addView() {
         addSubview(mainMoneyLabel)
         addSubview(timestampLabel)

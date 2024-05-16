@@ -9,7 +9,7 @@ import UIKit
 
 class MoneyCollectionViewCell: UICollectionViewCell {
     static let identifier = "MoneyCollectionViewCell"
-    
+//    MARK: UI Property
     private var nameLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
@@ -26,6 +26,7 @@ class MoneyCollectionViewCell: UICollectionViewCell {
         lb.font = .systemFont(ofSize: 16)
         return lb
     }()
+//    MARK: Method
     private func addView() {
         contentView.addSubview(nameLabel)
         contentView.addSubview(moneyLabel)

@@ -9,13 +9,14 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
+//    MARK: UI Property & Method
     private var label: UILabel = {
         let lb = UILabel()
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.text = "hi"
         return lb
     }()
-    
+
     private func addView() {
         self.contentView.addSubview(label)
     }

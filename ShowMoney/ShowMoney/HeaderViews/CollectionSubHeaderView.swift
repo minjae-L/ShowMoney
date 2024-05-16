@@ -16,7 +16,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
     weak var delegate: CollectionSubHeaderViewDelegate?
     var index = 0
     
-//    MARK: Label Property
+//    MARK: UI Property
     private let categoryLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
@@ -36,7 +36,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         
         return lb
     }()
-    
     private var percentLabel: UILabel = {
         let lb = UILabel()
         lb.textAlignment = .left
@@ -45,7 +44,6 @@ class CollectionSubHeaderView: UICollectionReusableView {
         lb.numberOfLines = 0
         return lb
     }()
-//    MARK: Button Property
     private let addButton: UIButton = {
         let btn = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
@@ -57,7 +55,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
         return btn
     }()
     
-//    MARK: Stack Property
+//    MARK: Stack View Property
     private var stackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
@@ -77,7 +75,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
         return sv
     }()
     
-//    MARK: Add View & Layout
+//    MARK: Method
     private func addView() {
         addSubview(stackView)
         addSubview(addButton)
@@ -118,6 +116,7 @@ class CollectionSubHeaderView: UICollectionReusableView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerViewTapped))
         addGestureRecognizer(tapGesture)
     }
+    // 셀 확장 축소 기능
     @objc func headerViewTapped() {
         print("headerview tapped")
         delegate?.resizeSection(sectionIndex: index)
