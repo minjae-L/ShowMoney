@@ -35,7 +35,7 @@ struct PayModel {
 // 임시 데이터
 class Sample {
     static var data: [CollectionViewType] = [.category(model: MainSectionModel(moneyGoal: "1000000",
-                                                                               categorys: [MainCategory(name: "bye")])),
+                                                                               categorys: [MainCategory(name: "식비"), MainCategory(name: "식비"), MainCategory(name: "식비")])),
                                              .moneyTable(model: SubSectionModel(categoryName: "식비",
                                                                                 totalMoney: 100000,
                                                                                 percent: 50,

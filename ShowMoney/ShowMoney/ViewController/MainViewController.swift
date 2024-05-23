@@ -20,15 +20,31 @@ class MainViewController: UIViewController {
         
         return cv
     }()
+    private let appearance = UINavigationBarAppearance()
     override func viewDidLoad() {
         super.viewDidLoad()
         addView()
         configureLayout()
         configureColor()
+        configureNavigationAppearance()
         self.mainCollectionView.delegate = self
         self.mainCollectionView.dataSource = self
     }
 //    MARK: Method
+    private func configureNavigationAppearance() {
+        appearance.backgroundColor = UIColor(named: "ViewBackgroundColor")
+        self.navigationController?.navigationBar.standardAppearance = appearance
+        let label = UILabel()
+        label.text = "ShowMoney"
+        label.textColor = UIColor(named: "LabelTextColor")
+        label.font = .boldSystemFont(ofSize: 20)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.init(image: UIImage(systemName: "square.text.square", withConfiguration: imageConfig),
+                                                                        style: .plain,
+                                                                        target: nil,
+                                                                        action: nil)]
+    }
     private func addView() {
         view.addSubview(mainCollectionView)
     }
