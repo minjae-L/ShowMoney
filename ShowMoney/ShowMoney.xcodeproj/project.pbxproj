@@ -18,6 +18,7 @@
 		B55431782BCBCA130064B813 /* ShowMoneyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431772BCBCA130064B813 /* ShowMoneyUITests.swift */; };
 		B554317A2BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431792BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift */; };
 		B55431892BCBD9D10064B813 /* CollectionMainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55431882BCBD9D10064B813 /* CollectionMainHeaderView.swift */; };
+		B599C0F32BFF872D0020784E /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599C0F22BFF872D0020784E /* PopUpViewController.swift */; };
 		B5B282B92BCEC1E10056F86A /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B282B82BCEC1E10056F86A /* DataModels.swift */; };
 		B5F685522BCD52550048C0D6 /* CollectionSubHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F685512BCD52550048C0D6 /* CollectionSubHeaderView.swift */; };
 		B5FE5A242BF393550075B4D1 /* MoneyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE5A232BF393550075B4D1 /* MoneyCollectionViewCell.swift */; };
@@ -56,6 +57,7 @@
 		B55431772BCBCA130064B813 /* ShowMoneyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoneyUITests.swift; sourceTree = "<group>"; };
 		B55431792BCBCA130064B813 /* ShowMoneyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMoneyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B55431882BCBD9D10064B813 /* CollectionMainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionMainHeaderView.swift; sourceTree = "<group>"; };
+		B599C0F22BFF872D0020784E /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		B5B282B82BCEC1E10056F86A /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		B5F685512BCD52550048C0D6 /* CollectionSubHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSubHeaderView.swift; sourceTree = "<group>"; };
 		B5FE5A232BF393550075B4D1 /* MoneyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				B502E6462BF33296009D35C0 /* MainViewController.swift */,
+				B599C0F22BFF872D0020784E /* PopUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				B55431572BCBCA110064B813 /* AppDelegate.swift in Sources */,
 				B502E64D2BF34138009D35C0 /* CategoryCollectionViewCell.swift in Sources */,
 				B502E6472BF33296009D35C0 /* MainViewController.swift in Sources */,
+				B599C0F32BFF872D0020784E /* PopUpViewController.swift in Sources */,
 				B502E6492BF33A20009D35C0 /* MainCollectionViewCell.swift in Sources */,
 				B5F685522BCD52550048C0D6 /* CollectionSubHeaderView.swift in Sources */,
 				B55431592BCBCA110064B813 /* SceneDelegate.swift in Sources */,

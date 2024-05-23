@@ -42,8 +42,8 @@ class MainViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: label)
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem.init(image: UIImage(systemName: "square.text.square", withConfiguration: imageConfig),
                                                                         style: .plain,
-                                                                        target: nil,
-                                                                        action: nil)]
+                                                                        target: self,
+                                                                        action: #selector(showPopupView))]
     }
     private func addView() {
         view.addSubview(mainCollectionView)
@@ -59,6 +59,12 @@ class MainViewController: UIViewController {
     private func configureColor() {
         view.backgroundColor = UIColor(named: "ViewBackgroundColor")
         mainCollectionView.backgroundColor = UIColor(named: "ViewBackgroundColor")
+    }
+    @objc private func showPopupView() {
+        let vc = PopUpViewController()
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc,animated: true)
     }
 }
 
